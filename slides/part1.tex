@@ -1,0 +1,152 @@
+\begin{frame}[plain,noframenumbering]
+    \centering
+    \scalebox{3}{Introduction}
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{What is a Lambda Expression in \texttt{C++}?}
+    \texttt{cube} is a lambda \ldots
+    \inputcpplisting{snippet1}
+
+    \texttt{is\_even} is a lambda \ldots
+    \inputcpplisting{snippet2}
+\end{frame}
+
+\section{Syntax}
+
+\begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
+    The simplest (and most boring) lambda
+    \begin{lstlisting}
+auto x = []{};
+    \end{lstlisting}
+    \hfill \ldots no capturing, takes no parameters and returns nothing
+
+    \vspace{5mm}
+
+    \begin{columns}[t]
+        \begin{column}{.45\textwidth}
+            A slightly more \enquote{useful} lambda
+            \inputcpplisting{snippet3}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \ldots is equivalent to
+            \inputcpplisting{snippet4}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
+    \textbf{Capturing rules}
+    \begin{itemize}
+        \item \texttt{[x]}: captures \texttt{x} by value
+        \item \texttt{[\&x]}: captures \texttt{x} by reference
+        \item \texttt{[=]}: captures all variables (used in the lambda) by value
+        \item \texttt{[\&]}: captures all variables (used in the lambda) by reference
+        \item \texttt{[=, \&x]}: captures variables like with \texttt{[=]}, but \texttt{x} by reference
+        \item \texttt{[\&, x]}: captures variables like with \texttt{[\&]}, but \texttt{x} by value
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Capturing by value}
+    \begin{columns}[t]
+        \begin{column}{.45\textwidth}
+            \inputcpplisting{snippet5}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \ldots or equivalently
+            \inputcpplisting{snippet6}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Capturing by reference}
+    \begin{columns}[t]
+        \begin{column}{.45\textwidth}
+            \inputcpplisting{snippet7}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \ldots or equivalently
+            \inputcpplisting{snippet8}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet9a}
+
+    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} cannot assign to a variable captured by copy in a non-mutable lambda}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet9b}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{121}}
+    \inputcpplisting{snippet9b}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet9c}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{122}}
+    \inputcpplisting{snippet9c}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet9d}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{12}}
+    \inputcpplisting{snippet9d}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet10}
+
+    \begin{center}
+        (\href{https://en.cppreference.com/w/cpp/utility/exchange}{\texttt{cppreference.com/w/cpp/utility/exchange}})
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{11235}}
+    \inputcpplisting{snippet10}
+
+    \begin{center}
+        (\href{https://en.cppreference.com/w/cpp/utility/exchange}{\texttt{cppreference.com/w/cpp/utility/exchange}})
+    \end{center}
+\end{frame}
+
+\begin{frame}{\texttt{C++}'s Lambda Expression}
+    Remember, lambda expressions are pure syntactic sugar and are equivalent to \texttt{struct}s with an appropriate \texttt{operator()()} overload \ldots
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet11}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{11}}
+    \inputcpplisting{snippet11}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet12}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{66}}
+    \inputcpplisting{snippet12}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet13}
+
+    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} call to implicitly-deleted copy ctor}
+\end{frame}
+
+
+\section{Stateful Lambdas}
+
+\section{Best Practices}
+
+\section{Inheriting from Lambdas}

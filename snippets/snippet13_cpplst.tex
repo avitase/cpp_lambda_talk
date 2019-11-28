@@ -1,0 +1,10 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/V37Rmg}{\texttt{godbolt.org/z/V37Rmg}}]
+#include <iostream>
+#include <memory>
+
+int main() {
+    auto x = [i=std::make_unique<int>(1)] { return *i; };
+    auto y = x;
+    std::cout << x () << y();
+}
+\end{lstlisting}

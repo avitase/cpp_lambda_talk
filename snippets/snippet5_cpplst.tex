@@ -1,0 +1,9 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/FVwarE}{\texttt{godbolt.org/z/FVwarE}}]
+int main() {
+    int i = 1;
+    auto z = [i](int y) {
+        return i + y;
+    }(3);
+    return z;
+}
+\end{lstlisting}

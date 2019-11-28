@@ -1,0 +1,8 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/Fdafh9}{\texttt{godbolt.org/z/Fdafh9}}]
+#include <iostream>
+
+int main() {
+    auto x = [i=0]() mutable { return ++i; };
+    std::cout << x() << x();
+}
+\end{lstlisting}

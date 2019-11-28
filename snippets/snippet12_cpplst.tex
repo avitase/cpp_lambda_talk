@@ -1,0 +1,13 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/kpH_nT}{\texttt{godbolt.org/z/kpH\_nT}}]
+#include <iostream>
+
+int main() {
+    int i = 1;
+    int j = 2;
+    auto x = [&i, j] { return i + j; };
+    i = 4;
+    j = 6;
+    auto y = x;
+    std::cout << x() << y();
+}
+\end{lstlisting}

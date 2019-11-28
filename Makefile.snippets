@@ -1,0 +1,21 @@
+CPP := $(shell find snippets -name '*.cpp')
+TEX := $(shell \
+for f in `find snippets -name '*.cfg'`; do echo "$${f%.cfg}_lst.tex"; done\
+)
+
+all: $(TEX)
+
+venv: venv/bin/activate
+
+venv/bin/activate: requirements.txt
+	test -d venv || virtualenv venv
+	. venv/bin/activate; pip install -Ur requirements.txt
+	touch venv/bin/activate
+
+snippets/snippet%_lst.tex: snippets/snippet%.cfg $(CPP) venv convert.py
+	. venv/bin/activate; python convert.py $<
+
+clean:
+	rm -rf venv
+	find -iname "*.pyc" -delete
+	rm -f $(TEX)

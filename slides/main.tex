@@ -1,0 +1,54 @@
+\documentclass[compress,aspectratio=1610]{beamer}
+
+\usepackage[english]{babel}
+\usepackage[english]{isodate}
+\isodate
+\usepackage{multicol}
+\usepackage{csquotes}
+\usepackage{soul}
+
+\usepackage{fancyvrb}
+
+\usetheme{vertex}
+
+%\linespread{1.1}
+
+\usepackage{overpic}
+\usepackage{graphicx}
+\graphicspath{{../img/}}
+
+\usepackage{listings}
+\lstdefinestyle{cppstyle}{
+language=C++,
+basicstyle=\scriptsize\ttfamily,
+numbers=left,
+stringstyle=\ttfamily\color{vertexDarkRed},
+commentstyle=\itshape\color{vertexDarkBlue},
+captionpos={b},
+frame=single,
+morekeywords={constexpr,noexcept},
+breaklines=true,
+postbreak=\mbox{$\hookrightarrow$\space},
+showstringspaces=false
+}
+\lstset{style=cppstyle}
+\lstset{morekeywords={decltype,final}}
+\lstset{inputpath=../snippets}
+\newcommand{\inputcpplisting}[1]{\input{../snippets/#1_cpplst.tex}}
+
+\usepackage{fontspec}
+\setmonofont{Hack}
+
+\title{Everything you (n)ever wanted to know about C++'s Lambdas}
+\subtitle{iCSC 2020}
+\institute{Rostock University}
+\author{Nis Meinert}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\include{part1}
+
+\end{document}

@@ -144,9 +144,70 @@ auto x = []{};
     \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} call to implicitly-deleted copy ctor}
 \end{frame}
 
-
 \section{Stateful Lambdas}
 
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet14}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{3}}
+    \inputcpplisting{snippet14}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet15}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{5}}
+    \inputcpplisting{snippet15}
+
+    \begin{center}
+        ($^*$ undefined in a threaded context, since \texttt{static} is not thread-safe!)
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Stateful Lambdas}
+    \textbf{Fibonacci (again)}:
+    \inputcpplisting{snippet16a}
+\end{frame}
+
+\begin{frame}[fragile]{Stateful Lambdas}
+    Let us now try to interact with the state of the Lambda \ldots
+    \inputcpplisting{snippet16b}
+\end{frame}
+
+\begin{frame}[fragile]{Stateful Lambdas}
+    \ldots or slightly more conveniently:
+    \inputcpplisting{snippet16c}
+\end{frame}
+
+\begin{frame}[fragile]{Stateful Lambdas}
+    \begin{columns}[t]
+        \begin{column}{.6\textwidth}
+            \inputcpplisting{snippet16d}
+        \end{column}
+        \begin{column}{.35\textwidth}
+            \inputasmlisting{snippet16d}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \section{Best Practices}
+
+\begin{frame}[fragile]{Use Lambdas in STL algorithm}
+    \inputcpplisting{snippet17a}
+\end{frame}
+
+\begin{frame}[fragile]{Use Lambdas in STL algorithm}
+    \inputcpplisting{snippet17b}
+\end{frame}
+
+\begin{frame}[fragile]{Stop pollution of namespace with helper variables}
+    \inputcpplisting{snippet18}
+\end{frame}
+
+\begin{frame}[fragile]{Allow variables to be \texttt{const}}
+    \inputcpplisting{snippet19}
+\end{frame}
 
 \section{Inheriting from Lambdas}

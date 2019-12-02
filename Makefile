@@ -1,14 +1,22 @@
 .PHONY: all clean snippets
 
-PDF = icsc2020_nmeinert.pdf
+PDF_SLIDES = slides.pdf
+PDF_EXERCISE = exercise.pdf
 
-all: $(PDF)
+all: $(PDF_SLIDES) $(PDF_EXERCISE)
 
-$(PDF): slides/build/main.pdf
+$(PDF_SLIDES): slides/build/main.pdf 
 	cp $< $@
 
-slides/build/main.pdf: $(shell find slides -name '*.tex') $(shell find img -name '*.png') slides/beamerthemevertex.sty
+$(PDF_EXERCISE): exercise/build/main.pdf 
+	cp $< $@
+
+slides/build/main.pdf: $(shell find slides -name '*.tex') slides/beamerthemevertex.sty
 	cd slides && mkdir -p build && \
+	latexmk -halt-on-error -pdflatex=lualatex -pdf -jobname=build/main main.tex
+
+exercise/build/main.pdf: $(shell find exercise -name '*.tex')
+	cd exercise && mkdir -p build && \
 	latexmk -halt-on-error -pdflatex=lualatex -pdf -jobname=build/main main.tex
 
 snippets:
@@ -17,3 +25,4 @@ snippets:
 clean:
 	make clean -f Makefile.snippets
 	rm -f slides/build/*
+	rm -f exercise/build/*

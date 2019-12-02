@@ -1,0 +1,40 @@
+#include <cassert>
+
+template <typename T>
+struct Filters {
+    template <typename F, typename... Fs>
+    Filters(F f, Fs... fs) { /* TODO */ }
+
+    [[nodiscard]] auto operator()(T x) const { /* TODO */ }
+
+    template <typename F>
+    void add_filter(F f) { /* TODO */ }
+};
+
+template <typename... Fs> Filters(Fs... fs) -> Filters< /* TODO */ >;
+
+int main() {
+    auto f1 = [](int x) { return x % 2 == 0; };
+    auto f2 = [](int x) { return x % 3 == 0; };
+    Filters filters(f1, f2);
+
+    assert(filters(1) == false);
+    assert(filters(2) == true);
+    assert(filters(3) == true);
+    assert(filters(4) == true);
+    assert(filters(5) == false);
+    assert(filters(6) == true);
+    assert(filters(7) == false);
+
+    int d = 5;
+    auto f3 = [d](int x) { return x % d == 0; };
+    filters.add_filter(f3);
+
+    assert(filters(1) == false);
+    assert(filters(2) == true);
+    assert(filters(3) == true);
+    assert(filters(4) == true);
+    assert(filters(5) == true);
+    assert(filters(6) == true);
+    assert(filters(7) == false);
+}

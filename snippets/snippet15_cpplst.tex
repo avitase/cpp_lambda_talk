@@ -1,0 +1,13 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/XjTDvt}{\texttt{godbolt.org/z/XjTDvt}}]
+#include <iostream>
+
+int main() {
+    auto x = [] { static int i = 0; return ++i; };
+    auto y = x;
+    x();
+    x();
+    y();
+    y();
+    std::cout << x();
+}
+\end{lstlisting}

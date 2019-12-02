@@ -1,0 +1,21 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/S8U--M}{\texttt{godbolt.org/z/S8U--M}}]
+#include <utility>
+
+int main() {
+    auto fib = [i=0, j=1]() mutable {
+        struct Result {
+            int &i, &j;
+
+            auto next(int n = 1) {
+                while (n-- > 0) {
+                    i = std::exchange(j, j + i);
+                }
+                return *this;
+            }
+        };
+        return Result{.i=i, .j=j}.next();
+    };
+
+    return fib().next(10).j; // 144
+}
+\end{lstlisting}

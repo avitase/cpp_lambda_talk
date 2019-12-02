@@ -1,0 +1,12 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/J7cccJ}{\texttt{godbolt.org/z/J7cccJ}}]
+#include <algorithm>
+#include <vector>
+
+std::vector<int> get_ints();
+
+int main() {
+    auto ints = get_ints();
+    return *std::find_if(ints.begin(), ints.end(),
+                         [](int x) { return x > 0 && x < 10; });
+}
+\end{lstlisting}

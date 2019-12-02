@@ -1,0 +1,58 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/prsxs_}{\texttt{godbolt.org/z/prsxs\_}}]
+#include <cassert>
+#include <functional>
+#include <numeric>
+#include <vector>
+
+template <typename T>
+struct Filters {
+    std::vector<std::function<bool(T)>> filters;
+
+    template <typename... Fs>
+    Filters(Fs... fs): filters({std::function<bool(T)>{fs}...}) {}
+
+    [[nodiscard]] auto operator()(T x) const {
+        auto logical_or = [x](bool acc, auto f) { return acc || f(x); };
+        return std::accumulate(filters.begin(), filters.end(), false, logical_or);
+    }
+
+    template <typename F>
+    void add_filter(F f) {
+        filters.emplace_back(f);
+    }  
+};
+
+template <typename T> struct arg;
+template <typename R, typename T> struct arg<std::function<R(T)>> { using type = T; };
+template <typename T> using arg_t = typename arg<T>::type;
+
+template <typename... Fs>
+Filters(Fs... fs)
+-> Filters<std::common_type_t<arg_t<decltype(std::function(fs))>...>>;
+
+int main() {
+    auto f1 = [](int x) { return x % 2 == 0; };
+    auto f2 = [](int x) { return x % 3 == 0; };
+    Filters filters(f1, f2);
+
+    assert(filters(1) == false);
+    assert(filters(2) == true);
+    assert(filters(3) == true);
+    assert(filters(4) == true);
+    assert(filters(5) == false);
+    assert(filters(6) == true);
+    assert(filters(7) == false);
+
+    int d = 5;
+    auto f3 = [d](int x) { return x % d == 0; };
+    filters.add_filter(f3);
+
+    assert(filters(1) == false);
+    assert(filters(2) == true);
+    assert(filters(3) == true);
+    assert(filters(4) == true);
+    assert(filters(5) == true);
+    assert(filters(6) == true);
+    assert(filters(7) == false);
+}
+\end{lstlisting}

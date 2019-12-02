@@ -13,6 +13,11 @@
     \inputcpplisting{snippet2}
 \end{frame}
 
+\begin{frame}[plain,noframenumbering]
+    \centering
+    \scalebox{3}{Syntax}
+\end{frame}
+
 \section{Syntax}
 
 \begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
@@ -144,6 +149,11 @@ auto x = []{};
     \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} call to implicitly-deleted copy ctor}
 \end{frame}
 
+\begin{frame}[plain,noframenumbering]
+    \centering
+    \scalebox{3}{Stateful Lambdas}
+\end{frame}
+
 \section{Stateful Lambdas}
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
@@ -192,6 +202,11 @@ auto x = []{};
     \end{columns}
 \end{frame}
 
+\begin{frame}[plain,noframenumbering]
+    \centering
+    \scalebox{3}{Best Practices}
+\end{frame}
+
 \section{Best Practices}
 
 \begin{frame}[fragile]{Use Lambdas in STL algorithm}
@@ -210,4 +225,133 @@ auto x = []{};
     \inputcpplisting{snippet19}
 \end{frame}
 
-\section{Inheriting from Lambdas}
+\begin{frame}[fragile]{Avoid default capture modes}
+    Below, there is a dangling pointer lurking in the wings \ldots
+    \begin{lstlisting}
+void add_filter() {
+    auto divisor = get_magic_number();
+    filters.emplace_back([&](int x) { return % divisor == 0; });
+}
+    \end{lstlisting}
+
+    This error becomes more obvious, when explicit capturing is used:
+    \begin{lstlisting}
+void add_filter() {
+    auto divisor = get_magic_number();
+    filters.emplace_back([&divisor](int x) { return % divisor == 0; });
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Avoid default capture modes}
+    Mitigation of copy \& paste bugs:
+    \begin{lstlisting}
+auto divisor = get_magic_number();
+std::find_if(container.begin(),
+             container.end(),
+             [&divisor](int x) { return x % divisor == 0; });
+    \end{lstlisting}
+
+    \texttt{[\&divisor]} indicates that there is an \textit{external} dependency and it is not enough to \enquote{just copy} the lambda function if needed elsewhere.
+
+    {\footnotesize (off-topic: check out this interesting article about copy \& paste bugs in real world applications: \enquote{The Last Line Effect} by the PVS-Studio team, \href{https://www.viva64.com/en/b/0260/}{\texttt{www.viva64.com/en/b/0260/}})}  
+\end{frame}
+
+\begin{frame}[fragile]{Avoid default capture modes}
+    Does the following implementation looks fine?
+    \begin{lstlisting}
+struct Widget {
+    int divisor = 2;
+
+    void add_filter() const {
+        filters.emplace_back([=](int x) { return x % divisor == 0; });
+    }
+};
+    \end{lstlisting}
+    \hfill \ldots given a sufficient implementation of \texttt{filters}
+
+    \only<2>{\scalebox{1.2}{\textbf{No! Horrible code!}}
+
+    Capturing only applies to non-\texttt{static} local variables. Why does this work?}
+\end{frame}
+
+\begin{frame}[fragile]{Avoid default capture modes}
+    Capturing only applies to non-\texttt{static} local variables. Why does this work?
+    \begin{lstlisting}
+Widget::add_filter() const {
+    filters.emplace_back([=](int x) { return x % divisor == 0; });
+}
+    \end{lstlisting}
+    \ldots but this fails
+    \begin{lstlisting}
+Widget::add_filter() const {
+    filters.emplace_back([](int x) { return x % divisor == 0; });
+}
+    \end{lstlisting}
+
+    \ldots and this also
+    \begin{lstlisting}
+Widget::add_filter() const {
+    filters.emplace_back([divisor](int x) { return x % divisor == 0; });
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Avoid default capture modes}
+    There is no local variable \texttt{divisor}! But what happes is the following
+    \begin{lstlisting}
+Widget::add_filter() const {
+    filters.emplace_back([=](int x) {
+        return x % divisor == 0;
+    });
+}
+    \end{lstlisting}
+    copies (implicitly) \texttt{this} pointer (\textcolor{vertexDarkRed}{until \texttt{C++17}}), i.e.
+    \begin{lstlisting}    
+Widget::add_filter() const {
+    auto copy_of_this = this;
+    filters.emplace_back([copy_of_this](int x) {
+        return x % copy_of_this->divisor == 0;
+    });
+}
+    \end{lstlisting}
+
+    \ldots welcome to the world of undefined behavior, when \texttt{Widget} goes out of scope!
+\end{frame}
+
+\begin{frame}[fragile]{Avoid default capture modes}
+    Default capturing by value can be misleading and gives the impression that a lambda is self-contained:
+    \begin{lstlisting}
+static auto divisor = 1;
+filters.emplace_back([=](int x) { return x % divisor == 0; });
+++divisor;
+    \end{lstlisting}
+    Above, \texttt{divisor} is not copied! (as one may have guessed seeing \texttt{[=]})
+\end{frame}
+
+\begin{frame}[fragile]{Stop using \texttt{std::bind}}
+    \scalebox{1.2}{Stop using \texttt{std::bind}}
+
+    \ldots and prefer lambda expression, since
+    \begin{itemize}
+        \item this increases readability,
+        \item lambdas are much more flexible,
+        \item \texttt{std::bind} can potentially introduce additional overhead at run-time, whereas lambdas are default \texttt{constexpr}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Stop using \texttt{std::function}}
+    \scalebox{1.2}{Stop using \texttt{std::function}}
+
+    \begin{itemize}
+        \item \texttt{std::function} add multiple copies of passed object (consider using drop-in replacements such as \textit{delegate}s${}^{\color{vertexDarkRed}\star}$)
+        \item may cause heap allocation
+        \item is just a wrapper \ldots
+    \end{itemize}
+    \ldots deduce type of lambda via \texttt{auto} or template deduction, \textbf{if possible} (cf. exercise)
+
+    \vspace{5mm}
+
+    \scalebox{.75}{${}^{\color{vertexDarkRed}\star}$\href{https://codereview.stackexchange.com/questions/14730/impossibly-fast-delegate-in-c11}{\texttt{codereview.stackexchange.com/questions/14730/impossibly-fast-delegate-in-c11}}}
+    
+\end{frame}

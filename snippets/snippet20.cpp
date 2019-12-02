@@ -8,7 +8,7 @@ struct Filters {
     std::vector<std::function<bool(T)>> filters;
 
     template <typename... Fs>
-    Filters(Fs... fs): filters({std::function<bool(T)>{fs}...}) {}
+    Filters(Fs... fs): filters({std::function<bool(T)>{std::move(fs)}...}) {}
 
     [[nodiscard]] auto operator()(T x) const {
         auto logical_or = [x](bool acc, auto f) { return acc || f(x); };
@@ -17,7 +17,7 @@ struct Filters {
 
     template <typename F>
     void add_filter(F f) {
-        filters.emplace_back(f);
+        filters.emplace_back(std::move(f));
     }  
 };
 

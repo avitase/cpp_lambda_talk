@@ -31,3 +31,156 @@ struct X: F1, F2 {
     \end{lstlisting}
     \ldots but what is the type of a lambda / what are \texttt{F1} and \texttt{F2}?
 \end{frame}
+
+\begin{frame}[fragile]{According to the \texttt{C++17} standard, will this compile?}
+    \inputcpplisting{snippet22}
+\end{frame}
+
+\begin{frame}[fragile]{According to the \texttt{C++14} standard, will this compile?}
+    \inputcpplisting{snippet22}
+
+    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} use of class template \enquote{\texttt{X}} requires template arguments}
+\end{frame}
+
+\begin{frame}[fragile]{Inheriting from Lambdas}
+    What are the deduced types of \texttt{auto} / what are the types of \texttt{f1} and \texttt{f2}?
+    \begin{lstlisting}
+auto f1 = [] { return 1; };
+auto f2 = [](int x) { return x; };
+    \end{lstlisting}
+    Use \texttt{decltype} to find out!
+    \begin{lstlisting}
+X<decltype(f1), decltype(f2)> combined{f1, f2};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Inheriting from Lambdas}
+    \ldots or extract this to a factory function \texttt{make\_combined}
+
+    \inputcpplisting{snippet23}
+\end{frame}
+
+\begin{frame}[fragile]{According to the \texttt{C++17} standard, will this compile?}
+    \inputcpplisting{snippet24a}
+
+    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} cannot deduce template arguments of \enquote{\texttt{X<F1, F2>}}, as it has no viable deduction guides}
+\end{frame}
+
+\begin{frame}[fragile]{According to the \texttt{C++17} standard, will this compile?}
+    \inputcpplisting{snippet24b}
+\end{frame}
+
+\begin{frame}[fragile]{Variadic Templates}
+    \inputcpplisting{snippet25}
+\end{frame}
+
+\begin{frame}[noframenumbering]{Inheriting from Lambdas}
+    \centering
+    \scalebox{4.}{Why?}
+\end{frame}
+
+\begin{frame}[plain,noframenumbering]
+    \centering
+    \scalebox{8.}{\{}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{std::variant}}
+    An enum class models a \textbf{choice between \textcolor{vertexDarkRed}{values}}:
+    \begin{lstlisting}
+enum class Oven { on, off };
+    \end{lstlisting}
+
+    \texttt{std::variant} models a \textbf{choice between \textcolor{vertexDarkRed}{types}}:
+    \begin{lstlisting}
+struct on { double temperature; };
+struct off {};
+using Oven = std::variant<on, off>;
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{std::variant}}
+    An aggregate type of some simple shapes \ldots
+    \begin{lstlisting}
+struct Shape {
+    enum class Type { Circle, Box } type;
+    
+    union {
+        struct { double radius; } circle;
+        struct { double width, height; } box;
+    } geometry;
+};
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{std::variant}}
+    \ldots and an outer function that calculates the respective area
+    \begin{lstlisting}
+auto area(const Shape& shape) {
+    switch(shape.type) {
+        case Shape::Type::Circle: {
+            const auto& g = shape.geometry.circle;
+            return M_PI * g.radius * g.radius;
+        }
+        case Shape::Type::Box: {
+            const auto& g = shape.geometry.box;
+            return g.width * g.height;
+        }
+    }
+
+    assert(false);
+    __builtin_unreachable();
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,noframenumbering]
+    \inputcpplisting{snippet26}
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{std::variant} instead}
+    \inputcpplisting{snippet27}
+\end{frame}
+
+\begin{frame}[plain,noframenumbering]
+    \centering
+    \scalebox{8.}{\}}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet28} 
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{34}}
+    \inputcpplisting{snippet28} 
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet29} 
+\end{frame}
+
+\begin{frame}[fragile]{A: Compile-time error! (\texttt{visitor} is not exhaustive)}
+    \inputcpplisting{snippet29} 
+\end{frame}
+
+\begin{frame}[fragile]{Using plain old \texttt{structs}}
+    \inputcpplisting{snippet30} 
+\end{frame}
+
+\begin{frame}{Nota bene}
+    One could also use a generic lambda\ldots
+    \inputcpplisting{snippet31}
+
+    \hfill \ldots however, no check for exhaustiveness at compile-time here!
+\end{frame}
+
+\begin{frame}{Q: What is the output of the program?}
+    \inputcpplisting{snippet32}
+\end{frame}
+
+\begin{frame}{A: 1}
+    \inputcpplisting{snippet32}
+\end{frame}
+
+\begin{frame}{\texttt{std::variant} evaluation at compile-time}
+    \inputcpplisting{snippet33}
+\end{frame}

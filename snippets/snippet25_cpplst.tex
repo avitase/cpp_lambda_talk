@@ -1,0 +1,20 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/tetzwR}{\texttt{godbolt.org/z/tetzwR}}]
+#include <iostream>
+
+template <typename... Fs> struct X: Fs... {
+    using Fs::operator()...;
+};
+
+template <typename... Fs>
+X(Fs...) -> X<std::decay_t<Fs>...>;
+
+int main() {
+    auto f1 = [] { return 1; };
+    auto f2 = [](int x) { return x; };
+    auto f3 = [](double x) { return -x; };
+    X combined{f1, f2, f3};
+    std::cout << combined() << '\n'     // should print "1"
+              << combined(2) << '\n'    // should print "2"
+              << combined(3.4) << '\n'; // should print "-3.4"
+}
+\end{lstlisting}

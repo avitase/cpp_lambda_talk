@@ -1,0 +1,18 @@
+#include <iostream>
+#include <variant>
+
+struct A { auto f() { return 1; }};
+struct B { auto g() { return 2; }};
+
+int main() {
+    std::visit([](auto x) {
+        using X = decltype(x);
+        if constexpr (std::is_same_v<X, A>) {
+            std::cout << x.f();
+        } else if constexpr (std::is_same_v<X, B>) {
+            std::cout << x.g();
+        } else {
+            std::cout << x.palim();
+        } 
+    }, std::variant<A, B>{A{}});
+}

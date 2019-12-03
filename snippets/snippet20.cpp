@@ -33,7 +33,7 @@ Filters(Fs... fs)
 int main() {
     auto f1 = [](int x) { return x % 2 == 0; };
     auto f2 = [](int x) { return x % 3 == 0; };
-    Filters filters(f1, f2);
+    Filters filters{f1, f2};
 
     assert(filters(1) == false);
     assert(filters(2) == true);

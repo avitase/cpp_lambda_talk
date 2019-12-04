@@ -6,7 +6,7 @@ int main() {
     auto ints = get_ints();
     const auto sum = [&ints] {
         int acc = 0;
-        for (auto &x: ints) acc += x;
+        for (auto& x: ints) acc += x;
         return acc;
     }();
 

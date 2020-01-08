@@ -41,6 +41,48 @@ auto x = []{};
     \end{columns}
 \end{frame}
 
+\begin{frame}[plain]
+    \centering
+    \scalebox{4.}{%
+        \only<1>{\texttt{Rage mode: off}}%
+        \only<2>{\texttt{Rage mode: on}}%
+    }
+\end{frame}
+
+\begin{frame}[fragile]{What is the output of the program?}
+    \begin{lstlisting}[language=python]
+def f():
+    return [lambda x: x + k for k in range(3)]
+
+print(f()[1](2))
+    \end{lstlisting}
+
+    \only<2,3>{\textbf{Answer:} \texttt{4} (not \texttt{3})\ldots}
+
+    \only<3>{\hfill \textbf{Why?} implicit capture by reference}
+\end{frame}
+
+\begin{frame}[fragile]{Fix}
+    \begin{lstlisting}[language=python]
+def f():
+    return [functools.partial(lambda x, k: x + k, k=k) for k in range(3)]
+
+print(f()[1](2))
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Best approximation in \texttt{C++}}
+    \inputcpplisting{snippet34}
+\end{frame}
+
+\begin{frame}[plain]
+    \centering
+    \scalebox{4.}{%
+        \only<1>{\texttt{Rage mode: on}}%
+        \only<2>{\texttt{Rage mode: off}}%
+    }
+\end{frame}
+
 \begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
     \textbf{Capturing rules}
     \begin{itemize}

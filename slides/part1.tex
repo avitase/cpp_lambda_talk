@@ -41,46 +41,58 @@ auto x = []{};
     \end{columns}
 \end{frame}
 
-\begin{frame}{Let's talk about Python}
-    \centering
-    \scalebox{4.}{%
-        \only<1>{\texttt{Rage mode: off}}%
-        \only<2>{\texttt{Rage mode: on}}%
-    }
-\end{frame}
+\begin{frame}[fragile]{Let's talk about Python}
+    \textbf{Q:} What is the output of the program?
 
-\begin{frame}[fragile]{What is the output of the program?}
     \begin{lstlisting}[language=python]
-def f():
-    return [lambda x: x + k for k in range(3)]
+#!/usr/bin/env python3
 
-print(f()[1](2))
+if __name__ == '__main__':
+    f = {k: lambda x: x + k for k in range(3)}
+
+    for k in range(3):
+        print(f[k](2), end='')
     \end{lstlisting}
 
-    \only<2,3>{\textbf{Answer:} \texttt{4} (not \texttt{3})\ldots}
+    \only<2,3>{\textbf{A:} \texttt{444}}
 
     \only<3>{\hfill \textbf{Why?} implicit capture by reference}
 \end{frame}
 
 \begin{frame}[fragile]{Fix}
+    \textbf{Q:} What is the output of the program?
+
     \begin{lstlisting}[language=python]
-def f():
-    return [functools.partial(lambda x, k: x + k, k=k) for k in range(3)]
+#!/usr/bin/env python3
 
-print(f()[1](2))
+from functools import partial
+
+if __name__ == '__main__':
+    f = {k: partial(lambda x, k: x + k, k=k) for k in range(3)}
+
+    for k in range(3):
+        print(f[k](2), end='')
     \end{lstlisting}
+    
+    \textbf{A:} \texttt{234}
 \end{frame}
 
-\begin{frame}[fragile]{Best approximation in \texttt{C++}}
-    \inputcpplisting{snippet34}
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet34a}
+
+    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} \enquote{k} is not captured}
 \end{frame}
 
-\begin{frame}[plain]
-    \centering
-    \scalebox{4.}{%
-        \only<1>{\texttt{Rage mode: on}}%
-        \only<2>{\texttt{Rage mode: off}}%
-    }
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet34b}
+
+    \only<2>{\textbf{A:} \texttt{234}}
+\end{frame}
+
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \inputcpplisting{snippet34c}
+
+    \only<2>{\textbf{A:} \texttt{555} (not \texttt{444})}
 \end{frame}
 
 \begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}

@@ -69,6 +69,8 @@ from functools import partial
 
 if __name__ == '__main__':
     f = {k: partial(lambda x, k: x + k, k=k) for k in range(3)}
+    # f = {k: lambda x, k=k: x + k for k in range(3)}
+    # ... would change API
 
     for k in range(3):
         print(f[k](2), end='')

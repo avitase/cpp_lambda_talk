@@ -41,9 +41,19 @@ auto x = []{};
     \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Let's talk about Python}
-    \textbf{Q:} What is the output of the program?
+\begin{frame}[fragile]{Q: What is the output of the program?}
+    \begin{lstlisting}[language=python]
+#!/usr/bin/env python3
 
+if __name__ == '__main__':
+    f = {k: lambda x: x + k for k in range(3)}
+
+    for k in range(3):
+        print(f[k](2), end='')
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{A: \texttt{444}}
     \begin{lstlisting}[language=python]
 #!/usr/bin/env python3
 
@@ -54,14 +64,10 @@ if __name__ == '__main__':
         print(f[k](2), end='')
     \end{lstlisting}
 
-    \only<2,3>{\textbf{A:} \texttt{444}}
-
-    \only<3>{\hfill \textbf{Why?} implicit capture by reference}
+    \hfill \textbf{Why?} \only<2>{implicit capture by reference}
 \end{frame}
 
 \begin{frame}[fragile]{Fix}
-    \textbf{Q:} What is the output of the program?
-
     \begin{lstlisting}[language=python]
 #!/usr/bin/env python3
 
@@ -76,7 +82,7 @@ if __name__ == '__main__':
         print(f[k](2), end='')
     \end{lstlisting}
     
-    \textbf{A:} \texttt{234}
+    Now prints: \texttt{234}
 \end{frame}
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
@@ -87,14 +93,18 @@ if __name__ == '__main__':
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet34b}
+\end{frame}
 
-    \only<2>{\textbf{A:} \texttt{234}}
+\begin{frame}[fragile]{A: \text{234}}
+    \inputcpplisting{snippet34b}
 \end{frame}
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet34c}
+\end{frame}
 
-    \only<2>{\textbf{A:} \texttt{555} (not \texttt{444})}
+\begin{frame}[fragile]{A: \texttt{555} (not \texttt{444})}
+    \inputcpplisting{snippet34c}
 \end{frame}
 
 \begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}

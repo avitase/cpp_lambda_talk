@@ -5,7 +5,8 @@
 int main() {
     std::unordered_map<int, std::function<int(int)>> f;
     
-    for (int k = 0; k < 3; k++) {
+    int k;
+    for (k = 0; k < 3; k++) {
         f.emplace(k, [&k](int x) { return x + k; });
     }
 

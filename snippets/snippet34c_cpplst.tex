@@ -1,4 +1,4 @@
-\begin{lstlisting}[title=\href{https://godbolt.org/z/p97MXD}{\texttt{godbolt.org/z/p97MXD}}]
+\begin{lstlisting}[title=\href{https://godbolt.org/z/iquoDN}{\texttt{godbolt.org/z/iquoDN}}]
 #include <functional>
 #include <iostream>
 #include <map>
@@ -6,7 +6,8 @@
 int main() {
     std::unordered_map<int, std::function<int(int)>> f;
     
-    for (int k = 0; k < 3; k++) {
+    int k;
+    for (k = 0; k < 3; k++) {
         f.emplace(k, [&k](int x) { return x + k; });
     }
 

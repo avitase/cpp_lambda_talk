@@ -298,7 +298,7 @@ if __name__ == '__main__':
     \begin{lstlisting}
 void add_filter() {
     auto divisor = get_magic_number();
-    filters.emplace_back([&](int x) { return % divisor == 0; });
+    filters.emplace_back([&](int x) { return x % divisor == 0; });
 }
     \end{lstlisting}
 
@@ -306,7 +306,7 @@ void add_filter() {
     \begin{lstlisting}
 void add_filter() {
     auto divisor = get_magic_number();
-    filters.emplace_back([&divisor](int x) { return % divisor == 0; });
+    filters.emplace_back([&divisor](int x) { return x % divisor == 0; });
 }
     \end{lstlisting}
 \end{frame}

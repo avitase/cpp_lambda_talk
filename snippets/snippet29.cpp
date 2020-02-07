@@ -12,8 +12,8 @@ int main() {
     int a = 0; double b = 0.;
     X visitor{[&a](int x) { a += x; },
               [&b](double x) { b += x; }};
-    std::vector<std::variant<int, double>> v{1, 1.9, 2, 2.1, "foo"};
-    std::for_each(v.begin(), v.end(), [&visitor](const auto &x) {
+    std::vector<std::variant<int, double, const char*>> v{1, 1.9, 2, 2.1, "foo"};
+    std::for_each(v.begin(), v.end(), [&visitor](const auto& x) {
         std::visit(visitor, x);
     });
     std::cout << a << b;

@@ -14,7 +14,7 @@ auto f2 = [](int x) { return x; };
 
     Is it possible to combine both lambdas (by inheritance) in one common type \texttt{X}?
     \begin{lstlisting}
-X combined(f1, f2);
+X combined{f1, f2};
 auto a = combined();   // should return 1
 auto b = combined(42); // should return 42
     \end{lstlisting}

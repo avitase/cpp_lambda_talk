@@ -8,7 +8,7 @@ all: $(TEX)
 venv: venv/bin/activate
 
 venv/bin/activate: requirements.txt
-	test -d venv || virtualenv venv
+	test -d venv || virtualenv venv -p `which python3`
 	. venv/bin/activate; pip install -Ur requirements.txt
 	touch venv/bin/activate
 

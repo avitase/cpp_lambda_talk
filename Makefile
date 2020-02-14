@@ -1,4 +1,4 @@
-.PHONY: all clean snippets
+.PHONY: all clean snippets slides/build/main.pdf
 
 PDF_SLIDES = slides.pdf
 PDF_EXERCISE = exercise.pdf
@@ -11,13 +11,13 @@ $(PDF_SLIDES): slides/build/main.pdf
 $(PDF_EXERCISE): exercise/build/main.pdf 
 	cp $< $@
 
-slides/build/main.pdf: $(shell find slides -name '*.tex') slides/beamerthemevertex.sty
+slides/build/main.pdf: 
 	cd slides && mkdir -p build && \
-	latexmk -halt-on-error -pdflatex=lualatex -pdf -jobname=build/main main.tex
+	lualatex -halt-on-error -jobname=build/main main.tex
 
 exercise/build/main.pdf: $(shell find exercise -name '*.tex')
 	cd exercise && mkdir -p build && \
-	latexmk -halt-on-error -pdflatex=lualatex -pdf -jobname=build/main main.tex
+	lualatex -halt-on-error -jobname=build/main main.tex
 
 snippets:
 	make -f Makefile.snippets

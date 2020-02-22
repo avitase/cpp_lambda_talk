@@ -9,7 +9,7 @@ int main() {
         f.emplace(k, [k](int x) { return x + k; });
     }
 
-    for (int k = 0; k < 3; k++) {
-        std::cout << f[k](2);
+    for (int i = 0; i < 3; i++) {
+        std::cout << f[i](2);
     }
 }

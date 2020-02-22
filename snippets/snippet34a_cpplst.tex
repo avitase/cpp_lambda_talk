@@ -1,4 +1,4 @@
-\begin{lstlisting}[title=\href{https://godbolt.org/z/BhJrjd}{\texttt{godbolt.org/z/BhJrjd}}]
+\begin{lstlisting}[title=\href{https://godbolt.org/z/QssJXN}{\texttt{godbolt.org/z/QssJXN}}]
 #include <functional>
 #include <iostream>
 #include <map>
@@ -10,8 +10,8 @@ int main() {
         f.emplace(k, [](int x) { return x + k; });
     }
 
-    for (int k = 0; k < 3; k++) {
-        std::cout << f[k](2);
+    for (int i = 0; i < 3; i++) {
+        std::cout << f[i](2);
     }
 }
 \end{lstlisting}

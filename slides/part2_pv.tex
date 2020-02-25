@@ -39,9 +39,6 @@ struct X: F1, F2 {
 \begin{frame}[fragile]{According to the \texttt{C++14} standard, will this compile?}
     \inputcpplisting{snippet22}
 
-% REMOVE_FOR_PRINT {
-    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} use of class template \enquote{\texttt{X}} requires template arguments}
-% REMOVE_FOR_PRINT }
 \end{frame}
 
 \begin{frame}[fragile]{Inheriting from Lambdas}
@@ -65,9 +62,6 @@ X<decltype(f1), decltype(f2)> combined{f1, f2};
 \begin{frame}[fragile]{According to the \texttt{C++17} standard, will this compile?}
     \inputcpplisting{snippet24a}
 
-% REMOVE_FOR_PRINT {
-    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} cannot deduce template arguments of \enquote{\texttt{X<F1, F2>}}, as it has no viable deduction guides}
-% REMOVE_FOR_PRINT }
 \end{frame}
 
 \begin{frame}[fragile]{According to the \texttt{C++17} standard, will this compile?}
@@ -154,21 +148,11 @@ auto area(const Shape& shape) {
     \inputcpplisting{snippet28} 
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{34}}
-    \inputcpplisting{snippet28} 
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet29} 
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: Compile-time error! (\texttt{visitor} is not exhaustive)}
-    \inputcpplisting{snippet29} 
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Using plain old \texttt{structs}}
     \inputcpplisting{snippet30} 
@@ -185,11 +169,6 @@ auto area(const Shape& shape) {
     \inputcpplisting{snippet32}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: 1}
-    \inputcpplisting{snippet32}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{\texttt{std::variant} evaluation at compile-time}
     \inputcpplisting{snippet33}

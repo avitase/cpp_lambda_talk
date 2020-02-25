@@ -53,21 +53,6 @@ if __name__ == '__main__':
     \end{lstlisting}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{444}}
-    \begin{lstlisting}[language=python]
-#!/usr/bin/env python3
-
-if __name__ == '__main__':
-    f = {k: lambda x: x + k for k in range(3)}
-
-    for k in range(3):
-        print(f[k](2), end='')
-    \end{lstlisting}
-
-    \hfill \textbf{Why?} \only<2>{implicit capture by reference}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Fix}
     \begin{lstlisting}[language=python]
@@ -90,30 +75,17 @@ if __name__ == '__main__':
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet34a}
 
-% REMOVE_FOR_PRINT {
-    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} \enquote{k} is not captured}
-% REMOVE_FOR_PRINT }
 \end{frame}
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet34b}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \text{234}}
-    \inputcpplisting{snippet34b}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet34c}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{555} (not \texttt{444})}
-    \inputcpplisting{snippet34c}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
     \textbf{Capturing rules}
@@ -154,40 +126,22 @@ if __name__ == '__main__':
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet9a}
 
-% REMOVE_FOR_PRINT {
-    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} cannot assign to a variable captured by copy in a non-mutable lambda}
-% REMOVE_FOR_PRINT }
 \end{frame}
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet9b}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{121}}
-    \inputcpplisting{snippet9b}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet9c}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{122}}
-    \inputcpplisting{snippet9c}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet9d}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{12}}
-    \inputcpplisting{snippet9d}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet10}
@@ -197,15 +151,6 @@ if __name__ == '__main__':
     \end{center}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{11235}}
-    \inputcpplisting{snippet10}
-
-    \begin{center}
-        (\href{https://en.cppreference.com/w/cpp/utility/exchange}{\texttt{cppreference.com/w/cpp/utility/exchange}})
-    \end{center}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}{\texttt{C++}'s Lambda Expression}
     Remember, lambda expressions are pure syntactic sugar and are equivalent to \texttt{struct}s with an appropriate \texttt{operator()()} overload \ldots
@@ -215,28 +160,15 @@ if __name__ == '__main__':
     \inputcpplisting{snippet11}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{11}}
-    \inputcpplisting{snippet11}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet12}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{66}}
-    \inputcpplisting{snippet12}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet13}
 
-% REMOVE_FOR_PRINT {
-    \only<2>{\textbf{\textcolor{vertexDarkRed}{error:}} call to implicitly-deleted copy ctor}
-% REMOVE_FOR_PRINT }
 \end{frame}
 
 \begin{frame}[plain,noframenumbering]
@@ -250,25 +182,11 @@ if __name__ == '__main__':
     \inputcpplisting{snippet14}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{3}}
-    \inputcpplisting{snippet14}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Q: What is the output of the program?}
     \inputcpplisting{snippet15}
 \end{frame}
 
-% REMOVE_FOR_PRINT {
-\begin{frame}[fragile,noframenumbering]{A: \texttt{5}}
-    \inputcpplisting{snippet15}
-
-    \begin{center}
-        ($^*$ undefined in a threaded context, since \texttt{static} is not thread-safe!)
-    \end{center}
-\end{frame}
-% REMOVE_FOR_PRINT }
 
 \begin{frame}[fragile]{Stateful Lambdas}
     \textbf{Fibonacci (again)}:
@@ -366,14 +284,8 @@ struct Widget {
     \end{lstlisting}
     \hfill \ldots given a sufficient implementation of \texttt{filters}
 
-% REMOVE_FOR_PRINT {
-    \only<2>{%
-% REMOVE_FOR_PRINT }
     \scalebox{1.2}{\textbf{No! Horrible code!}}
     Capturing only applies to non-\texttt{static} local variables. Why does this work?
-% REMOVE_FOR_PRINT {
-    }
-% REMOVE_FOR_PRINT }
 \end{frame}
 
 \begin{frame}[fragile]{Avoid default capture modes}

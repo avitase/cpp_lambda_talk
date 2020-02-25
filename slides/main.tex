@@ -1,5 +1,9 @@
 \documentclass[compress,aspectratio=1610]{beamer}
 
+\usepackage{ifthen}
+\newboolean{printversion}
+\setboolean{printversion}{true}
+
 \usepackage[english]{babel}
 \usepackage[english]{isodate}
 \isodate
@@ -50,7 +54,10 @@ showstringspaces=false
 
 \maketitle
 
+\ifthenelse{\boolean{printversion}}{%
+\include{part1_pv}
+\include{part2_pv}}{
 \include{part1}
-\include{part2}
+\include{part2}}
 
 \end{document}

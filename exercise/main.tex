@@ -30,6 +30,19 @@ showstringspaces=false
 
 \begin{document}
 
+\section{Recursion}
+Implement a lambda expression \texttt{f(int x)} that calculates $x!$ (factorial of \texttt{x}) by recursion upon calling!
+Use the following skeleton:
+\begin{lstlisting}
+int main() {
+    auto f = /* TODO */
+        return x < 2 ? x : x * f( /* TODO */
+    });
+
+    return f(3);
+}
+\end{lstlisting}
+
 \section{Function traits}
 \label{sec:fcttraits}
 Finish the implementation of \texttt{function\_traits} and \texttt{lambda\_traits}, such that the program compiles successfully! Note, that it is sufficient for \texttt{function\_traits} to only accept instances of \texttt{std::function}. Think about how you can use your implementation of \texttt{function\_traits} with lambda expressions and implement this logic in \texttt{lambda\_traits}. Note further, that invocations of \texttt{std::function} are not critical in terms of possible performance penalties in this scenario, as long as the traits are available at compile time (as required in \texttt{main}).
@@ -167,6 +180,11 @@ if you want to learn more.
 \newpage
 
 \section{Solutions}
+
+\subsection{Recursion}
+\inputcpplisting{snippet35}
+
+\newpage
 
 \subsection{Function traits}
 \inputcpplisting{snippet21}

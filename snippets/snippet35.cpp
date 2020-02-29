@@ -1,0 +1,16 @@
+#include <utility>
+
+template <typename Callable>
+[[nodiscard]] auto make_recursion(Callable f) noexcept {
+    return [f]<typename... Args>(Args&&... args) {
+        return f(f, std::forward<Args>(args)...);
+    };
+}
+
+int main() {
+    auto f = make_recursion([](auto f, auto x) noexcept -> decltype(x) {
+        return x < 2 ? x : x * f(f, x - 1);
+    });
+
+    return f(3);
+}

@@ -13,7 +13,7 @@ int main() {
 
 \section{Function traits}
 \label{sec:fcttraits}
-Finish the implementation of \texttt{function\_traits} and \texttt{lambda\_traits}, such that the program compiles successfully! Note, that it is sufficient for \texttt{function\_traits} to only accept instances of \texttt{std::function}. Think about how you can use your implementation of \texttt{function\_traits} with lambda expressions and implement this logic in \texttt{lambda\_traits}. Note further, that invocations of \texttt{std::function} are not critical in terms of possible performance penalties in this scenario, as long as the traits are available at compile time (as required in \texttt{main}).
+Finish the implementation of \texttt{function\_traits} and \texttt{lambda\_traits} such that the program compiles successfully! Note that it is sufficient for \texttt{function\_traits} to only accept instances of \texttt{std::function}. Think about how you can use your implementation of \texttt{function\_traits} with lambda expressions and implement this logic in \texttt{lambda\_traits}. Note further that invocations of \texttt{std::function} are not critical in terms of possible performance penalties in this scenario, as long as the traits are available at compile time (as required in \texttt{main}).
 
 \inputcpplisting{snippet21a}
 
@@ -22,7 +22,7 @@ Finish the implementation of \texttt{function\_traits} and \texttt{lambda\_trait
 \newpage
 
 \section{Passing lambdas as argument}
-Implement \texttt{Filters} as an logical \textit{or} filter gathering, such that the program below compiles and runs successfully.
+Implement \texttt{Filters} as an logical \textit{or} filter gathering such that the program below compiles and runs successfully.
 
 \inputcpplisting{snippet20a}
 
@@ -40,7 +40,7 @@ Further, implement a function
 \begin{lstlisting}
 template <typename F> void Filters::add_filter(F)
 \end{lstlisting}
-that adds a filter to the gathering. Note, that in the example there is no common type in terms of \texttt{std::common\_type\_t} for \texttt{f1}, \texttt{f2} and \texttt{f3}:
+that adds a filter to the gathering. Note that in the example there is no common type in terms of \texttt{std::common\_type\_t} for \texttt{f1}, \texttt{f2} and \texttt{f3}:
 \begin{lstlisting}
 using T12 = std::common_type_t<decltype(f1), decltype(f2)>; // OK
 using T123 = std::common_type_t<T12, decltype(f3)>;         // Compile-time error!
@@ -105,7 +105,7 @@ template <typename... Fs>
 Filters(Fs... fs)
 -> Filters<std::common_type_t< /* TODO */ >>;
 \end{lstlisting}
-Add an sufficient implementation of
+Add a sufficient implementation of
 \begin{lstlisting}
 template <typename F> void Filters::add_filter(F)
 \end{lstlisting}

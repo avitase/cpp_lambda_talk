@@ -115,12 +115,22 @@ and don't forget to adopt your implementation of \texttt{Filters.operator()(T)}!
 Can you think of an alternative to \texttt{std::function}? Why can we not use \texttt{std::common\_type} or \texttt{std::variant}?
 
 \textbf{Hint:} Compare the sizes of lambdas with different captures:
-\begin{lstlisting}[title=\href{https://godbolt.org/z/ZBUfgY}{\texttt{godbolt.org/z/ZBUfgY}}]
-int capture_me = 1;
-std::cout << sizeof([](int x) { return x; }) << '\n';
-std::cout << sizeof([y=capture_me](int x) { return x + y; }) << '\n';
-std::cout << sizeof([y=&capture_me](int x) { return x + y; }) << '\n';
+\begin{lstlisting}[title=\href{https://godbolt.org/z/o3bPso}{\texttt{godbolt.org/z/o3bPso}}]
+#include <iostream>
+
+int main() {
+    int capture_me = 1;
+
+    auto f1 = [](int x) { return x; };
+    auto f2 = [y=capture_me](int x) { return x + y; };
+    auto f3 = [y=&capture_me](int x) { return x + y; };
+    std::cout << sizeof(f1) << '\n';
+    std::cout << sizeof(f2) << '\n';
+    std::cout << sizeof(f3) << '\n';
+}
 \end{lstlisting}
+
+\newpage
 
 \subsection{Optional}
 In case you are wondering what \texttt{std::common\_type} does; its rules are based on the rules for the ternary operator which can be confusing, e.g.

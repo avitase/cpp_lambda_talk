@@ -1,0 +1,15 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/YY44v7}{\texttt{godbolt.org/z/YY44v7}}]
+#include <iostream>
+#include <optional>
+
+int main() {
+    using opt_t = std::optional<int>;
+    auto o = []() -> opt_t {
+        return 42;
+    }();
+    std::cout << (*o)++;
+
+    const auto co = o;
+    (*co)++; // error!
+}
+\end{lstlisting}

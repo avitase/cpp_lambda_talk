@@ -1,9 +1,4 @@
-\begin{frame}[plain,noframenumbering]
-    \centering
-    \scalebox{3}{Introduction}
-\end{frame}
-
-\section{Introduction}
+\section{Syntax}
 
 \begin{frame}[fragile]{What is a Lambda Expression in \texttt{C++}?}
     \texttt{cube} is a lambda \ldots
@@ -12,13 +7,6 @@
     \texttt{is\_even} is a lambda \ldots
     \inputcpplisting{snippet2}
 \end{frame}
-
-\begin{frame}[plain,noframenumbering]
-    \centering
-    \scalebox{3}{Syntax}
-\end{frame}
-
-\section{Syntax}
 
 \begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
     The simplest (and most boring) lambda
@@ -369,10 +357,25 @@ filters.emplace_back([=](int x) { return x % divisor == 0; });
         \item may cause heap allocation
         \item is just a wrapper \ldots
     \end{itemize}
-    \ldots deduce type of lambda via \texttt{auto} or template deduction, \textbf{if possible} (cf. exercise)
+    \ldots deduce type of lambda via \texttt{auto} or template deduction, \textbf{if possible} (cf.\ exercise)
 
     \vspace{5mm}
 
     \scalebox{.75}{${}^{\color{vertexDarkRed}\star}$\href{https://codereview.stackexchange.com/questions/14730/impossibly-fast-delegate-in-c11}{\texttt{codereview.stackexchange.com/questions/14730/impossibly-fast-delegate-in-c11}}}
-    
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{std::function}: Const-correctness / thread-safety bug}
+    \begin{columns}[T]
+        \begin{column}{.45\textwidth}
+            \inputcpplisting{snippet36}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \inputcpplisting{snippet37}
+            \textbf{Compile-time Error:} increment of read-only location
+        \end{column}
+    \end{columns} 
+
+    \begin{center}
+        (\footnotesize shamelessly stolen from \href{https://youtu.be/IY8tHh2LSX4}{Titus Winters, Pacific++ 2018: \textit{C++ Past vs. Future}})
+    \end{center}
 \end{frame}

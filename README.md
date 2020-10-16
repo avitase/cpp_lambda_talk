@@ -1,5 +1,5 @@
 # About
-Presentation material for my iCSC 2020 talk "Everything you (n)ever wanted to know about C++'s Lambdas". The slides and exercises are available at:
+Presentation material for my talk "Everything you (n)ever wanted to know about C++'s Lambdas". The slides and exercises are available at:
  - slides: [slides.pdf](slides.pdf)
  - exercises: [exercise.pdf](exercise.pdf)
 

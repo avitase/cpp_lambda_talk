@@ -22,11 +22,34 @@ auto x = []{};
             A slightly more \enquote{useful} lambda
             \inputcpplisting{snippet3}
         \end{column}
-        \begin{column}{.45\textwidth}
-            \ldots is equivalent to
+        \begin{column}{.46\textwidth}
+            \ldots is equivalent to$\textcolor{vertexDarkRed}{{}^\star}$ 
             \inputcpplisting{snippet4}
         \end{column}
     \end{columns}
+    
+    \vspace{5mm}
+
+    \footnotesize $\textcolor{vertexDarkRed}{{}^\star}$ check Compiler Explorer links (note $\texttt{-O0}$\,!)
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{C++}'s Lambda Expression}
+    \begin{columns}[t]
+        \begin{column}{.45\textwidth}
+            An even more \enquote{useful} lambda
+            \inputcpplisting{snippet3b}
+        \end{column}
+        \begin{column}{.46\textwidth}
+            \ldots is equivalent to$\textcolor{vertexDarkRed}{{}^\star}$ 
+            \inputcpplisting{snippet4b}
+        \end{column}
+    \end{columns}
+
+    Lambda expressions are \textbf{pure syntactic sugar} and are equivalent to \texttt{struct}s with an appropriate \texttt{operator()()} overload!
+    
+    \vspace{5mm}
+
+    \footnotesize $\textcolor{vertexDarkRed}{{}^\star}$ check Compiler Explorer links (note $\texttt{-O0}$\,!)
 \end{frame}
 
 \begin{frame}[fragile]{Q: What is the output of the program?}

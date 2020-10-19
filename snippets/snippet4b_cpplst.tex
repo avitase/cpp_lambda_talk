@@ -1,0 +1,10 @@
+\begin{lstlisting}[title=\href{https://godbolt.org/z/xfcYM7}{\texttt{godbolt.org/z/xfcYM7}}]
+int main() {
+    struct {
+        auto operator()(int y) const {
+            return y;
+        }
+    } x;
+    return x(42);
+}
+\end{lstlisting}

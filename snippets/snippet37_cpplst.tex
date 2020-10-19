@@ -1,4 +1,4 @@
-\begin{lstlisting}[title=\href{https://godbolt.org/z/YY44v7}{\texttt{godbolt.org/z/YY44v7}}]
+\begin{lstlisting}[title=\href{https://godbolt.org/z/cT7E9j}{\texttt{godbolt.org/z/cT7E9j}}]
 #include <iostream>
 #include <optional>
 
@@ -7,9 +7,8 @@ int main() {
     auto o = []() -> opt_t {
         return 42;
     }();
-    std::cout << (*o)++;
-
     const auto co = o;
-    (*co)++; // error!
+    std::cout << (*o)++;  // O.K.
+    std::cout << (*co)++; // error!
 }
 \end{lstlisting}

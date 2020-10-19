@@ -54,6 +54,8 @@ showstringspaces=false
 
 \maketitle
 
+\ifthenelse{\boolean{printversion}}{}{\include{preface}}
+
 \ifthenelse{\boolean{printversion}}{%
 \include{part1_pv}
 \include{part2_pv}}{

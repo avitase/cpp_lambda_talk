@@ -478,7 +478,7 @@ filters.emplace_back([=](int x) { return x % divisor == 0; });
     \scalebox{1.2}{Stop using \texttt{std::function}}
 
     \begin{itemize}
-        \item \texttt{std::function} add multiple copies of passed object (consider using drop-in replacements such as \textit{delegate}s${}^{\color{vertexDarkRed}\star}$)
+        \item \texttt{std::function} adds multiple copies of passed object (consider using drop-in replacements such as \textit{delegate}s${}^{\color{vertexDarkRed}\star}$)
         \item may cause heap allocation
         \item is just a wrapper \ldots
     \end{itemize}
